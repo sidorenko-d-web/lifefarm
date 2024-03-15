@@ -19,6 +19,7 @@ app.use(cors({
 }))
 
 app.use(require('./routes/ItemRouter'))
+app.use(require('./routes/UserRouter'))
 
 mongoConnect()
 

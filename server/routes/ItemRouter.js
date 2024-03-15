@@ -8,6 +8,8 @@ router.get('/getallitems', ItemController.getAllItems)
 
 router.delete('/deleteitem', ItemController.deleteItem)
 
-router.post('/createitem', ItemController.postItem) 
+router.post('/createitem', ItemController.postItem)
+
+router.put('/updateitem', ItemController.updateItem) 
 
 module.exports = router

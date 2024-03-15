@@ -4,7 +4,7 @@ import Login from './login'
 import Registration from './registration'
 
 const RegForm = () => {
-    const [regState, setRegState] = useState(true)
+    const [regState, setRegState] = useState(false)
 
     const navigate = useNavigate()
 

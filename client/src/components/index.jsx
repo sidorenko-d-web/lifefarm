@@ -12,23 +12,27 @@ import axios from 'axios';
 
 const Index = () => {
     const [isAuth, setIsAuth] = useState(true)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(true)
 
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState()
     const [items, setItems] = useState([])
     const [sort, setSort] = useState('cost')
+    const [filter, setFilter] = useState('n')
+    const [search, setSearch] = useState('')
 
     const handleSearchSubmit = (e) => {
         e.preventDefault()
-        console.log('searched ', e.target.searchRequest.value)
+        setSearch(e.target.searchRequest.value)
     }
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/getallitems?`, {
             params:{
                 page,
-                sort
+                sort,
+                filter,
+                search
             }
         }).then(res => {
             setItems(res.data.items)
@@ -38,7 +42,7 @@ const Index = () => {
                 setTotalPages(Math.ceil(res.data.count / 12))
             }
         })
-    }, [page, sort])
+    }, [page, sort, filter, search])
 
     return (
         <div className="bg-c-bg text-c-black-500">
@@ -52,7 +56,7 @@ const Index = () => {
                     <button className="w-6" type='submit' htmlFor="global-search"><img src="/magnifying-glass-solid.svg" alt="" /></button>
                 </form>
                 {/* catalog controls */}
-                <CatalogControls setSort={setSort}/>
+                <CatalogControls setSort={setSort} setFilter={setFilter}/>
                 {/* items */}
                 <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-3 2xl:gap-6 justify-between">
                     {isAdmin && <CatalogAddItem />}

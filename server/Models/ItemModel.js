@@ -44,6 +44,10 @@ const ItemSchema = new mongoose.Schema({
     itemImage:{
         type: String,
         required: true
+    },
+    tag:{
+        type: String,
+        required: true
     }
 
 });

@@ -24,7 +24,6 @@ const AddItem = () => {
                 id: query.get('id'),
             }
         }).then(res => {
-            console.log(res.data)
             setItemData(res.data)
             reset(res.data)
         }).catch((error) => {
@@ -37,8 +36,13 @@ const AddItem = () => {
    
     const [imgToTransfer, setImgToTransfer] = useState()
     
+    const file = watch('itemImage')
+
     const convertImage = (file) => {
-        if(!file)return
+        if(!file) return
+        if(file[0] == 'd') return
+        const fileExt = file.name.split('.').at(-1)
+        if(fileExt != 'jpg' && fileExt != 'jpeg' && fileExt != 'png') return
         let reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = () => {
@@ -49,14 +53,15 @@ const AddItem = () => {
         }
     }
 
-    const file = watch('itemImage')
     file && convertImage(file[0])
 
     const onSubmit = async (data) => {
-        console.log(import.meta.env.VITE_API_URL)
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/createitem`, {...data, itemImage: imgToTransfer})
-            console.log(res.data)
+            let fileExt = undefined
+            if(file[0].name) { fileExt = file[0].name.split('.').at(-1)}
+            if(fileExt != 'jpg' && fileExt != 'jpeg' && fileExt != 'png' && fileExt) return console.log('you not allow to send this type of file')
+
+            await axios.put(`${import.meta.env.VITE_API_URL}/updateItem`, {...data, itemImage: imgToTransfer})
         } catch (error) {
             console.log(error, 'err')
         }
@@ -71,10 +76,13 @@ const AddItem = () => {
             >
                 {/*item img */}
                 <div>
-                    {imgToTransfer && <img
+                    {imgToTransfer ? <img
                         className="max-sm:w-10/12  m-auto max-h-full"
                         src={imgToTransfer} alt="file"
-                    />}
+                    />:<img
+                    className="max-sm:w-10/12  m-auto max-h-full"
+                    src={file} alt="file"
+                />}
                     <input 
                         type="file" {...register('itemImage')}
                     />
@@ -100,7 +108,7 @@ const AddItem = () => {
                             <span>Производитель</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("producer")}
                             />
                         </div>
@@ -108,7 +116,7 @@ const AddItem = () => {
                             <span>Применение</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("purpose")}
                             />
                         </div>
@@ -116,7 +124,7 @@ const AddItem = () => {
                             <span>Возраст</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("years")}
                             />
                         </div>
@@ -124,7 +132,7 @@ const AddItem = () => {
                             <span>Дозировка</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("dose")}
                             />
                         </div>
@@ -132,7 +140,7 @@ const AddItem = () => {
                             <span>Наличие на складе</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("avalibility")}
                             />
                         </div>
@@ -140,7 +148,7 @@ const AddItem = () => {
                             <span>Вкус</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("flavor")}
                             />
                         </div>
@@ -148,7 +156,7 @@ const AddItem = () => {
                             <span>Шт в упаковке</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("pack")}
                             />
                         </div>
@@ -169,10 +177,10 @@ const AddItem = () => {
                         </div>
                     </div>
                     <button
-                        className=" bg-c-green text-c-white text-2xl rounded-full py-3"
+                        className=" bg-c-green active:bg-green-700 text-c-white text-2xl rounded-full py-3"
                         type="submit"
                     >
-                        Создать товар
+                        Изменить товар
                     </button>
                 </div>
             </form>

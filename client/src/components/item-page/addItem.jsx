@@ -3,6 +3,7 @@ import axios from 'axios'
 import Header from "../ui-break-points/header";
 import Footer from "../ui-break-points/footer";
 import { useForm } from "react-hook-form";
+const API_URL = import.meta.env.VITE_API_URL
 
 const AddItem = () => {
 
@@ -30,9 +31,8 @@ const AddItem = () => {
     file && convertImage(file[0])
 
     const onSubmit = async (data) => {
-        console.log(import.meta.env.VITE_API_URL)
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/createitem`, {...data, itemImage: imgToTransfer})
+            const res = await axios.post(`${API_URL}/createitem`, {...data, itemImage: imgToTransfer})
             console.log(res.data)
         } catch (error) {
             console.log(error, 'err')
@@ -79,7 +79,7 @@ const AddItem = () => {
                             <span>Производитель</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("producer")}
                             />
                         </div>
@@ -87,7 +87,7 @@ const AddItem = () => {
                             <span>Применение</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("purpose")}
                             />
                         </div>
@@ -95,7 +95,7 @@ const AddItem = () => {
                             <span>Возраст</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("years")}
                             />
                         </div>
@@ -103,7 +103,7 @@ const AddItem = () => {
                             <span>Дозировка</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("dose")}
                             />
                         </div>
@@ -111,7 +111,7 @@ const AddItem = () => {
                             <span>Наличие на складе</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("avalibility")}
                             />
                         </div>
@@ -119,7 +119,7 @@ const AddItem = () => {
                             <span>Вкус</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("flavor")}
                             />
                         </div>
@@ -127,8 +127,16 @@ const AddItem = () => {
                             <span>Шт в упаковке</span>
                             <input
                                 type="text"
-                                className="border border-black text-right"
+                                className="border border-black"
                                 {...register("pack")}
+                            />
+                        </div>
+                        <div className="border-b border-c-green flex justify-between py-1.5 2xl:py-3">
+                            <span>{'Теги для сортировки (англ, через пробел)'}</span>
+                            <input
+                                type="text"
+                                className="border border-black"
+                                {...register("tag")}
                             />
                         </div>
                         <div className="border-b border-c-green flex justify-between py-1.5 2xl:py-3">

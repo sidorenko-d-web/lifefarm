@@ -1,15 +1,9 @@
 const Item = require("../Models/ItemModel");
+const BadRequest = require('../Errors/BadRequest')
 
 class ItemController {
     async getItem(req, res) {
         const query = req.query;
-
-        class BadRequest {
-            constructor(message) {
-                this.name = 'Bad request';
-                this.message = message;
-            }
-        }
 
         try {
             const item = await Item.findById(query.id);
@@ -19,7 +13,7 @@ class ItemController {
             res.json(item);
 
         } catch (error) {
-            if(error.name == 'Bad request'){
+            if(error.name == 'No data found'){
                 res.status(404).json(error)
             }
         }
@@ -27,7 +21,7 @@ class ItemController {
 
     async getAllItems(req, res) {
         const query = req.query;
-        let items, count, sort;
+        let sort, filter;
         switch (query.sort) {
             case 'cost':
                 sort = {cost: 1}
@@ -39,17 +33,25 @@ class ItemController {
                 sort = {avalibility: -1}
                 break;
         }
+        switch (query.filter) {
 
-        if (query.purpose) {
-            items = await Item.find({ purpose: query.purpose }).sort(
-                query.sort
-            );
-            count = await Item.countDocuments({ purpose: query.purpose })    
-        } else {
-            items = await Item.find({}, {itemImage:1, title:1, cost:1}).sort(sort).skip((query.page-1)*12).limit(12)
-            count = await Item.countDocuments({})  
-        }
-        res.json({items, count});
+            case 'n':
+                if(query.search == '')  filter = {}
+                else                    filter = {$text: {$search: query.search}}
+                break;
+
+            default:
+                                        filter = {$text: {$search: query.filter}}
+        }  
+
+       try {
+            const items = await Item.find(filter, {itemImage:1, title:1, cost:1}).sort(sort).skip((query.page-1)*12).limit(12)
+            const count = await Item.countDocuments({})  
+            
+            res.json({items, count});
+       } catch (error) {
+            console.log(error)
+       }
     }
 
     async postItem(req, res) {
@@ -76,6 +78,16 @@ class ItemController {
             await Item.deleteOne({_id: query.id})
             res.send('item deleted')
 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async updateItem(req, res){
+        const body = req.body
+        try {
+            await Item.updateOne({_id: body._id}, {$set: body})
+            
         } catch (error) {
             console.log(error)
         }
