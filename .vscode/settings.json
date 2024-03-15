@@ -1,0 +1,7 @@
+{
+    "tailwindCSS.experimental.configFile": null,
+    "tailwindCSS.includeLanguages": {
+        "javascript": "javascript",
+        "javascriptreact": "javascriptreact"
+    }
+}
