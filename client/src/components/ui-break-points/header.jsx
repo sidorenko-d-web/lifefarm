@@ -1,16 +1,20 @@
+import Cookies from 'js-cookie'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Header = ({isAuth, isAdmin}) => {
+const Header = () => {
+
+    const [isAuthState, setIsAuthState] = useState(Cookies.get('Authorization') ? true : false)
+    const [isAdminState, setIsAdminState] = useState(Cookies.get('Authorization') === 'administrator' ? true : false)
 
   return (
     <header className='bg-c-green flex justify-center w-full shadow-c-sh'>
         <div className="w-2/3 flex gap-1 flex-col md:flex-row items-center justify-between py-4 text-c-white">
             <a href='/' className="uppercase font-semibold text-2xl 2xl:text-4xl">Жизньфарм</a>
-            {isAuth?
+            {isAuthState?
             <nav className="flex gap-4 items-center">
                 <h3 className="underline">Сидоренко Дмитрий</h3>
-                {!isAdmin&&<>
+                {!isAdminState&&<>
                     <a href="/cart" className="w-8"><img src="/cart-shopping-solid.svg" alt="" /></a>
                     <a href="/history" className="w-7"><img src="/clock-rotate-left-solid.svg" alt=""/></a>
                 </>}

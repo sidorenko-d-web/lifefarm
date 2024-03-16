@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 const API_URL = import.meta.env.VITE_API_URL
 
 const Login = ({ setRegState }) => {
@@ -21,6 +22,9 @@ const Login = ({ setRegState }) => {
                 params: data
             })
             if (res.data.access) {
+                const role = res.headers.getAuthorization()
+                Cookies.set('Authorization', role, {expires: 30, path: '/'})
+                Cookies.set('userId', res.data.user._id, {expires: 30, path: '/'})
                 navigate('/')
             } else {
                 if (res.data.msg === 'icp') {

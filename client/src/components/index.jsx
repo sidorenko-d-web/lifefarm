@@ -1,6 +1,6 @@
 import React, { useEffect, useState,  } from 'react'
 
-import { YMaps, Map } from '@pbe/react-yandex-maps';
+// import { YMaps, Map } from '@pbe/react-yandex-maps';
 import Header from './ui-break-points/header.jsx';
 import Footer from './ui-break-points/footer.jsx';
 import CatalogItem from './catalog-components/catalogItem.jsx';
@@ -9,10 +9,10 @@ import Pagination from './ui-components/pagination.jsx';
 import CatalogControls from './catalog-components/catalogControls.jsx';
 import CatalogAddItem from './catalog-components/catalogAddItem.jsx';
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 const Index = () => {
-    const [isAuth, setIsAuth] = useState(true)
-    const [isAdmin, setIsAdmin] = useState(true)
+    const [isAdminState, setIsAdminState] = useState(Cookies.get('Authorization') === 'administrator' ? true : false)
 
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState()
@@ -46,7 +46,7 @@ const Index = () => {
 
     return (
         <div className="bg-c-bg text-c-black-500">
-            <Header isAuth={isAuth} isAdmin={isAdmin}/>
+            <Header/>
             {/* catalog */}
             <main className="flex flex-col items-center w-10/12  md:w-8/12 mx-auto">
                 <h1 className="text-5xl 2xl:text-6xl font-bold  py-10">Каталог</h1>
@@ -59,9 +59,9 @@ const Index = () => {
                 <CatalogControls setSort={setSort} setFilter={setFilter}/>
                 {/* items */}
                 <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-3 2xl:gap-6 justify-between">
-                    {isAdmin && <CatalogAddItem />}
+                    {isAdminState && <CatalogAddItem />}
                     {items.map((elem, index) => 
-                        isAdmin?
+                        isAdminState?
                         <AdminCatalogItem id={elem._id} key={index} title={elem.title} cost={elem.cost} itemImage={elem.itemImage}/>
                         :
                             <CatalogItem id={elem._id} key={index} title={elem.title} cost={elem.cost} itemImage={elem.itemImage}/>
@@ -70,14 +70,14 @@ const Index = () => {
                 {/* pagination */}
                 <Pagination page={page} totalPages={totalPages} setPage={setPage}/>
                 {/* pick up points */}
-                <div className="flex flex-col w-full items-center">
+                {/* <div className="flex flex-col w-full items-center">
                     <div className="text-4xl font-bold  mb-10 text-center">Наши пункты выдачи</div>
                     <YMaps className="w-[100vw]">
                         <div className="w-[100vw]">
                             <Map className="w-[100vw] h-96 md:h-52" defaultState={{ center: [56.834018, 60.597106], zoom: 15 }} />
                         </div>
                     </YMaps>
-                </div>
+                </div> */}
             </main>
 
            <Footer/>

@@ -4,7 +4,6 @@ const BadRequest = require('../Errors/BadRequest')
 class ItemController {
     async getItem(req, res) {
         const query = req.query;
-
         try {
             const item = await Item.findById(query.id);
             if(item === null){

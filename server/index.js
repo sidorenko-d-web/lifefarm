@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const mongoConnect = require('./db/mongoConnect')
 const bodyParser = require('body-parser');
+const router = require('./routes/indexRouter')
+const cookieParser = require('cookie-parser');
 
 const app = express()
 const server = http.createServer(app)
@@ -15,11 +17,13 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use(cors({
+    exposedHeaders: 'Authorization',
     origin: '*'
 }))
 
-app.use(require('./routes/ItemRouter'))
-app.use(require('./routes/UserRouter'))
+app.use(cookieParser('apteka-secret-qweewq'))
+
+app.use(router)
 
 mongoConnect()
 

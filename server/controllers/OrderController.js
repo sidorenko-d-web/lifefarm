@@ -1,27 +1,20 @@
-const User = require("../Models/UserModel");
+const Order = require("../Models/OrderModel");
 const BadRequest = require('../Errors/BadRequest')
 
-class UserController {
-    async getUser(req, res) {
+class CartController {
+    async getOrder(req, res) {
         const query = req.query;
         try {
-            const user = await User.findOne({email: query.email});
-
-            if(user === null){
+            const items = await Order.find({userId: query.userId}).sort({timestamp: -1});
+            if(items === null){
                 throw new BadRequest('user does not exist')
             }
 
-            if(query.pass === user.pass){
-                res.setHeader('Authorization', user.role === 'administrator'?'administrator':'user')
-
-                res.json({access: true, user}).status(201)
-            }else{
-                res.json({access: false , msg: 'icp'});
-            }
+            res.json(items)
 
         } catch (error) {
             if(error.name == 'No data found'){
-                res.json({access: false, msg: 'und'})
+                res.json({access: false, msg: 'no data'})
             }
             else{
                 console.log(error)
@@ -29,10 +22,10 @@ class UserController {
         }
     }
 
-    async postUser(req, res) {
+    async postOrder(req, res) {
         try {
-            await User.create(req.body)
-            res.send("user registered").status(201);
+            await Order.create(req.body)
+            res.send("Order is created").status(201);
         } catch (error) {
             if (error.name === "ValidationError") {
                 let errors = {};
@@ -43,9 +36,10 @@ class UserController {
 
                 return res.send(errors).status(400);
             }
+            console.log(error)
             res.status(500).send("Something went wrong");
         }
     }
 }
 
-module.exports = new UserController();
+module.exports = new CartController();

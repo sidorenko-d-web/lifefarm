@@ -4,7 +4,7 @@ import Header from "../ui-break-points/header";
 import Footer from "../ui-break-points/footer";
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom'
-import { ErrorHandler } from '../Errors/ErrorHandles'
+import { ErrorHandler } from '../../Errors/ErrorHandlers'
 
 const AddItem = () => {
 
