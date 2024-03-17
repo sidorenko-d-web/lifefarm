@@ -5,7 +5,12 @@ class CartController {
     async getOrder(req, res) {
         const query = req.query;
         try {
-            const items = await Order.find({userId: query.userId}).sort({timestamp: -1});
+            let items
+            if(query.role == 'administrator'){
+                items = await Order.find().sort({timestamp: -1});
+            }else{
+                items = await Order.find({userId: query.userId}).sort({timestamp: -1});
+            }
             if(items === null){
                 throw new BadRequest('user does not exist')
             }

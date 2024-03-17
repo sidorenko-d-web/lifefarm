@@ -1,11 +1,16 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 const API_URL = import.meta.env.VITE_API_URL
 
 const CatalogItem = ({ id, title, cost, itemImage }) => {
+    const navigate = useNavigate()
     const handleAddItemToCart = async () => {
         try {
+            if(!Cookies.get('userId')){
+                return navigate('/reg')
+            }
             await axios.post(`${API_URL}/creatcartitem`, {
                 userId: Cookies.get('userId'),
                 item:{

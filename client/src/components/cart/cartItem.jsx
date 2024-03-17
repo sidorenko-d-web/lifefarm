@@ -15,7 +15,7 @@ const CartItem = ({itemImage, title, cost, id, count, incItemCount, decItemCount
         incItemCount(id, itemData.avalibility)
     }
     const minSummary = () => {
-        decItemCount(id)
+        decItemCount(id, itemData.avalibility)
     }
 
     const deleteCartItem = async () => {
@@ -51,7 +51,7 @@ const CartItem = ({itemImage, title, cost, id, count, incItemCount, decItemCount
         <div className="bg-c-white flex max-sm:flex-wrap items-center justify-between shadow-c-sh rounded-xl p-4 gap-5 relative">
             <button
                 onClick={deleteCartItem}
-                className="absolute w-20 aspect-square active:bg-c-red bg-gray-300 rounded-full right-0 translate-x-[140%] flex justify-center items-center text-5xl font-extrabold text-c-white"
+                className="absolute w-10 md:w-20 aspect-square active:bg-c-red bg-gray-300 rounded-full max-sm:top-2 right-2 md:translate-x-[150%] flex justify-center items-center text-2xl md:text-5xl font-extrabold text-c-white"
             >
                 Х
             </button>

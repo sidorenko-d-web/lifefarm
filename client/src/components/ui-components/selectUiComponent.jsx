@@ -10,7 +10,7 @@ const SelectUiComponent = ({ arr, setPickUpPoint }) => {
                 className="z-20  bg-c-white flex justify-between items-center w-full shadow-c-sh py-3 px-3 rounded-full">
                 <label className='text-2xl mx-3' htmlFor="">{currentValue}</label>
                 <div className={` transition-all bg-c-green text-2xl ${isOpenedList && '-rotate-90'} text-c-white size-9 rounded-full flex justify-center items-center`}>
-                    <img className='h-2/3' src="/chevron-left-solid.svg" alt="" />
+                    <img className='h-2/3' src="/src/icons/chevron-left-solid.svg" alt="" />
                 </div>
             </div>
             {/* list */}

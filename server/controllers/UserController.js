@@ -2,6 +2,16 @@ const User = require("../Models/UserModel");
 const BadRequest = require('../Errors/BadRequest')
 
 class UserController {
+    async getUserName(req, res){
+        const query = req.query;
+        try {
+            const fio = await User.findById(query.userId, {fio: 1})
+            res.json(fio)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getUser(req, res) {
         const query = req.query;
         try {

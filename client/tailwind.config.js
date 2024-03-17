@@ -25,11 +25,12 @@ export default {
       "c-bg":"#f5f5f5",
       "c-red":"#D64949",
       "c-placeholder":"#C3C8A8",
-      
-      ...colors
     },
     
     extend: {
+      colors: {
+        ...colors
+      },
       backgroundImage:{
         registration:'url(./registration-bg.svg)'
       },

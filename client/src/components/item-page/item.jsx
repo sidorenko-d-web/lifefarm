@@ -28,8 +28,19 @@ const item = () => {
         })
     }, [])
 
+    const handleBuyNow = () => {
+        if(!Cookies.get('userId')){
+            return navigate('/reg')
+        }
+        handleAddItemToCart()
+        navigate('/cart')
+    }
+
     const handleAddItemToCart = async () => {
         try {
+            if(!Cookies.get('userId')){
+                return navigate('/reg')
+            }
             const res = await axios.post(`${API_URL}/creatcartitem`, {
                 userId: Cookies.get('userId'),
                 item: {
@@ -98,7 +109,7 @@ const item = () => {
                     </div>
                     {/* btns*/}
                     <div className=" flex justify-between xl:text-2xl 2xl:text-3xl flex-col md:flex-row gap-5">
-                        <button className=' bg-c-green  py-3 px-6 xl: rounded-xl font-semibold text-c-white ' onClick={() => {handleAddItemToCart(); navigate('/cart')}}>Купить сейчас</button>
+                        <button className=' bg-c-green  py-3 px-6 xl: rounded-xl font-semibold text-c-white ' onClick={handleBuyNow}>Купить сейчас</button>
                         <button className=' bg-c-yellow py-3 px-6 rounded-xl font-semibold' onClick={handleAddItemToCart}>Добавить в корзину</button>
 
                     </div>

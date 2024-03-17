@@ -1,6 +1,6 @@
 import React, { useEffect, useState,  } from 'react'
 
-// import { YMaps, Map } from '@pbe/react-yandex-maps';
+import { YMaps, Map } from '@pbe/react-yandex-maps';
 import Header from './ui-break-points/header.jsx';
 import Footer from './ui-break-points/footer.jsx';
 import CatalogItem from './catalog-components/catalogItem.jsx';
@@ -70,14 +70,14 @@ const Index = () => {
                 {/* pagination */}
                 <Pagination page={page} totalPages={totalPages} setPage={setPage}/>
                 {/* pick up points */}
-                {/* <div className="flex flex-col w-full items-center">
+                <div className="flex flex-col w-full items-center">
                     <div className="text-4xl font-bold  mb-10 text-center">Наши пункты выдачи</div>
                     <YMaps className="w-[100vw]">
                         <div className="w-[100vw]">
                             <Map className="w-[100vw] h-96 md:h-52" defaultState={{ center: [56.834018, 60.597106], zoom: 15 }} />
                         </div>
                     </YMaps>
-                </div> */}
+                </div>
             </main>
 
            <Footer/>

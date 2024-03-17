@@ -14,10 +14,10 @@ const History = () => {
         const fetchData = async () => {
             const res = await axios.get(`${API_URL}/getorders`, {
                 params: {
-                    userId: Cookies.get('userId')
+                    userId: Cookies.get('userId'),
+                    role: Cookies.get('Authorization')
                 }
             })
-            console.log(res.data)
             setOrders(res.data)
         }
         fetchData()
@@ -31,7 +31,7 @@ const History = () => {
                 <h2 className=' text-3xl md:text-5xl font-bold'> История заказов</h2>
                 <div className="w-full items-center flex flex-col gap-3">
                     {orders.map((elem, index) => 
-                        <DetailsUiComponent key={index} arr={elem.orderItems} title={elem.timestamp}/>
+                        <DetailsUiComponent key={index} arr={elem.orderItems} title={elem.timestamp} orderId = {elem._id} deliveryDate={elem.deliveryDate}/>
                     )}
                 </div>
             </main>

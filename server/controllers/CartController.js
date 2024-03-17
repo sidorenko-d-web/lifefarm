@@ -49,6 +49,16 @@ class CartController {
             console.log(error)
         }
     }
+
+    async clearCart(req, res) {
+        const query = req.query
+
+        try {
+            await Cart.deleteMany({userId: query.userId})
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new CartController();
