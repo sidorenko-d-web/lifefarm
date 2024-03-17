@@ -18,6 +18,8 @@ class UserController {
             const user = await User.findOne({email: query.email});
 
             if(user === null){
+                const res = await User.find()
+                console.log(res)
                 throw new BadRequest('user does not exist')
             }
 
@@ -31,6 +33,7 @@ class UserController {
 
         } catch (error) {
             if(error.name == 'No data found'){
+                console.log(error)
                 res.json({access: false, msg: 'und'})
             }
             else{
@@ -40,10 +43,13 @@ class UserController {
     }
 
     async postUser(req, res) {
+        console.log('a')
         try {
-            await User.create(req.body)
+            const ress = await User.create(req.body)
+            console.log(ress)
             res.send("user registered").status(201);
         } catch (error) {
+            console.log(error)
             if (error.name === "ValidationError") {
                 let errors = {};
 
