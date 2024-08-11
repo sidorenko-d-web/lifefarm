@@ -65,7 +65,7 @@ const Index = () => {
             id="global-search"
           />
           <button className="w-6" type="submit" htmlFor="global-search">
-            <img src="/magnifying-glass-solid.svg" alt="" />
+            <img src="/icons/magnifying-glass-solid.svg" alt="" />
           </button>
         </form>
         {/* catalog controls */}
