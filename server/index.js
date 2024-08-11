@@ -1,5 +1,4 @@
 const express = require('express');
-const PORT = 8080
 const http = require('http')
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -7,6 +6,8 @@ const mongoConnect = require('./db/mongoConnect')
 const bodyParser = require('body-parser');
 const router = require('./routes/indexRouter')
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
+const PORT = process.env.PORT
 
 const app = express()
 const server = http.createServer(app)
@@ -18,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use(cors({
     exposedHeaders: 'Authorization',
-    origin: '*'
+    origin: process.env.CORS_URL
 }))
 
 app.use(cookieParser('apteka-secret-qweewq'))

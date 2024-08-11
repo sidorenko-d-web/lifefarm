@@ -1,5 +1,7 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose')
-const DB_URL = 'mongodb+srv://dimon1200:aPRbjiIj1sqeLiI8@lifefarmcluster.lczx24g.mongodb.net/lifefarm'
+const DB_URL = process.env.DB_CONNECT
 
 module.exports = async () => {
     try {
