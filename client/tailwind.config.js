@@ -32,7 +32,7 @@ export default {
         ...colors
       },
       backgroundImage:{
-        registration: 'url(./registration-bg.svg)'
+        registration: 'url(/registration-bg.svg)'
       },
       boxShadow: {"c-sh" : "0 4px 6px 2px rgba(0, 0, 0, 0.15)"},
       keyframes:{
